@@ -601,3 +601,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+### Data ###
+data/
+
+### Results ###
+results/
