@@ -21,6 +21,12 @@ FILES = {
 # The data/ folder is at the top of the repo
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 
+CLASS_NAMES = {
+    "mnist": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    "fashion": ["T-shirt", "Trouser", "Pullover", "Dress", "Coat",
+                "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"],
+}
+
 # Download the 4 files for "mnist" or "fashion" into data/<name>/
 def download(name):
     folder = os.path.join("data", name)
@@ -41,3 +47,9 @@ def read_images(path):
     pixels = np.frombuffer(raw, dtype=np.uint8, offset=16)
     images = pixels.reshape(-1, 28, 28)
     return images.astype(np.float32) / 255.0
+
+def read_labels(path):
+    with gzip.open(path, "rb") as f:
+        raw = f.read()
+    labels = np.frombuffer(raw, dtype=np.uint8, offset=8)
+    return labels.astype(np.int32)
