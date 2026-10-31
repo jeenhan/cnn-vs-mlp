@@ -2,13 +2,12 @@ import os
 
 import matplotlib.pyplot as plt
 
-from src.data import CLASS_NAMES, read_images, read_labels
+from src.data import CLASS_NAMES, load
 
 os.makedirs("figures", exist_ok=True)
 
 for name in ["mnist", "fashion"]:
-    x = read_images(f"data/{name}/train-images-idx3-ubyte.gz")
-    y = read_labels(f"data/{name}/train-labels-idx1-ubyte.gz")
+    x, y, _, _ = load(name)
 
     fig, axes = plt.subplots(2, 5, figsize=(8, 4))
     for i, ax in enumerate(axes.flat):
