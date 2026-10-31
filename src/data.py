@@ -2,6 +2,9 @@
 import os
 import urllib.request
 
+import gzip
+import numpy as np
+
 URLS = {
     "mnist": "http://storage.googleapis.com/cvdf-datasets/mnist/", # + filename
     "fashion": "http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/",
@@ -30,3 +33,11 @@ def download(name):
         else:
             print("Downloading", path)
             urllib.request.urlretrieve(URLS[name] + filename, path)
+
+# Reshape and convert raw data
+def read_images(path):
+    with gzip.open(path, "rb") as f:
+        raw = f.read()
+    pixels = np.frombuffer(raw, dtype=np.uint8, offset=16)
+    images = pixels.reshape(-1, 28, 28)
+    return images.astype(np.float32) / 255.0
