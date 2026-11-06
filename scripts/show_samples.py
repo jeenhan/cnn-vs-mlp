@@ -1,3 +1,4 @@
+"""Check if you can download and reshape the datasets well.""" 
 import os
 
 import matplotlib.pyplot as plt

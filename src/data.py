@@ -28,7 +28,7 @@ CLASS_NAMES = {
 }
 
 # Download the 4 files for "mnist" or "fashion" into data/<name>/
-def download(name):
+def download(name: str) -> None:
     folder = os.path.join("data", name)
     os.makedirs(folder, exist_ok=True)
 
@@ -41,26 +41,26 @@ def download(name):
             urllib.request.urlretrieve(URLS[name] + filename, path)
 
 # Reshape and convert raw data
-def read_images(path):
+def read_images(path: str) -> np.ndarray:
     with gzip.open(path, "rb") as f:
         raw = f.read()
     pixels = np.frombuffer(raw, dtype=np.uint8, offset=16)
     images = pixels.reshape(-1, 28, 28)
     return images.astype(np.float32) / 255.0
 
-def read_labels(path):
+def read_labels(path: str) -> np.ndarray:
     with gzip.open(path, "rb") as f:
         raw = f.read()
     labels = np.frombuffer(raw, dtype=np.uint8, offset=8)
     return labels.astype(np.int32)
 
-def load(name):
+def load(name: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     download(name)
     folder = os.path.join("data", name)
 
-    x_train = read_images(os.path.join(folder, "train-images-idx3-ubyte.gz"))
-    y_train = read_labels(os.path.join(folder, "train-labels-idx1-ubyte.gz"))
-    x_test = read_images(os.path.join(folder, "t10k-images-idx3-ubyte.gz"))
-    y_test = read_labels(os.path.join(folder, "t10k-labels-idx1-ubyte.gz"))
+    x_train = read_images(os.path.join(folder, FILES[x_train]))
+    y_train = read_labels(os.path.join(folder, FILES[y_train]))
+    x_test = read_images(os.path.join(folder, FILES[x_test]))
+    y_test = read_labels(os.path.join(folder, FILES[y_test]))
 
     return x_train, y_train, x_test, y_test
