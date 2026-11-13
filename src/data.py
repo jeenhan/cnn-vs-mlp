@@ -27,7 +27,7 @@ CLASS_NAMES = {
                 "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"],
 }
 
-# Download the 4 files for "mnist" or "fashion" into data/<name>/
+# Download the 4 dataset files into data/<name>/ and skip we already have
 def download(name: str) -> None:
     folder = os.path.join(DATA_DIR, name)
     os.makedirs(folder, exist_ok=True)
@@ -40,20 +40,22 @@ def download(name: str) -> None:
             print("Downloading", path)
             urllib.request.urlretrieve(URLS[name] + filename, path)
 
-# Reshape and convert raw data
+# Read a raw image into a float32 array of shape (N, 28, 28), values 0 to 1
 def read_images(path: str) -> np.ndarray:
     with gzip.open(path, "rb") as f:
         raw = f.read()
-    pixels = np.frombuffer(raw, dtype=np.uint8, offset=16)
-    images = pixels.reshape(-1, 28, 28)
+    pixels = np.frombuffer(raw, dtype=np.uint8, offset=16) # (47040000,)
+    images = pixels.reshape(-1, 28, 28) # Cut into 60000 pieces of 784
     return images.astype(np.float32) / 255.0
 
+# Read a raw label into an int32 array of shape (N,), values 0 to 9
 def read_labels(path: str) -> np.ndarray:
     with gzip.open(path, "rb") as f:
         raw = f.read()
     labels = np.frombuffer(raw, dtype=np.uint8, offset=8)
     return labels.astype(np.int32)
 
+# Return (x_train, y_train, x_test, y_test) for "mnist" or "fashion"
 def load(name: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     download(name)
     folder = os.path.join(DATA_DIR, name)
@@ -65,6 +67,7 @@ def load(name: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
 
     return x_train, y_train, x_test, y_test
 
+# Split off n_val examples
 def split_validation(
     x: np.ndarray,
     y: np.ndarray,
@@ -73,6 +76,6 @@ def split_validation(
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     rng = np.random.default_rng(seed)
     idx = rng.permutation(len(x))
-    val_idx = idx[:n_val] # array([37141, 17573, 34459, ..., 45305, 10302, 28162], shape=(5000,))
+    valid_idx = idx[:n_val] # array([37141, 17573, 34459, ..., 45305, 10302, 28162], shape=(5000,))
     train_idx = idx[n_val:] # array([52660, 53583, 28430, ..., 54261,  6803, 49912], shape=(55000,)
-    return x[train_idx], y[train_idx], x[val_idx], y[val_idx]
+    return x[train_idx], y[train_idx], x[valid_idx], y[valid_idx]

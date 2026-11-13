@@ -1,39 +1,54 @@
-# cnn-vs-mlp
-## Overview
-## Setup
-Requires Python 3.11 or newer.
+### Overview
+### Setup
+Clone `cnn-vs-mlp` and build two image recognizers from scratch. Take the CNN apart piece by piece to see what each component contributes.
+
+<table><tr><td valign="top" width="40%">
+
+<sub>__Step 1__</sub>
+
+Create a virtual environment and install the packages in the root folder.
+
+</td>
+<td valign="top" width="60%">
 
 ```bash
 git clone https://github.com/jeenhan/cnn-vs-mlp.git
 cd cnn-vs-mlp
+```
+```bash
 python -m venv .venv
-source .venv/bin/activate           # Windows: .venv\Scripts\activate
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
-#### 1. Download Datasets
-Start `python` from the repo root:
+
+</td></tr></table>
+
+<table><tr><td valign="top" width="40%">
+
+<sub>__Step 2__</sub>
+
+Run the sample script then check the two grids saved in `figures/`. Each grid has 10 images, each image is a 28 by 28 grid of grey pixels paired to its label. The validation split uses seed __3__: 5,000 training images are held out from each training set.
+
+</td>
+<td valign="top" width="60%">
 
 ```bash
->>> from src.data import load
->>> x_train, y_train, x_test, y_test = load("mnist")
-```
-Check the shapes and the first 10 labels:
-```bash
->>> x_train.shape, y_train.shape
-((60000, 28, 28), (60000,))
->>> x_test.shape, y_test.shape
-((10000, 28, 28), (10000,))
->>> y_test[:10]
-array([7, 2, 1, 0, 4, 1, 4, 9, 5, 9], dtype=int32)
+python -m scripts.show_samples
 ```
 
-#### 2. Read Images and Verify the Pairing
-Read images and labels and check visually if each image is correctly paired to its label.
-```bash
-cnn-vs-mlp % python -m scripts.show_samples
-```
+</td></tr></table>
 
-## Data
-## Reproducing Results
-## Architectural Differences from LeNet-5
-## Contributions
+### Reproducing Results
+
+### Differences from LeNet-5
+Architecture
+
+Dataset size
+- I held out 5,000 training images for validation and train on the remaining 55,000; the paper trains on all 60,000.
+- The paper predates Fashion-MNIST.
+
+Training budget
+
+Evaluation
+
+### Contributions
