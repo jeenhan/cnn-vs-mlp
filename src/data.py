@@ -29,7 +29,7 @@ CLASS_NAMES = {
 
 # Download the 4 files for "mnist" or "fashion" into data/<name>/
 def download(name: str) -> None:
-    folder = os.path.join("data", name)
+    folder = os.path.join(DATA_DIR, name)
     os.makedirs(folder, exist_ok=True)
 
     for filename in FILES.values():
@@ -56,7 +56,7 @@ def read_labels(path: str) -> np.ndarray:
 
 def load(name: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     download(name)
-    folder = os.path.join("data", name)
+    folder = os.path.join(DATA_DIR, name)
 
     x_train = read_images(os.path.join(folder, FILES["x_train"]))
     y_train = read_labels(os.path.join(folder, FILES["y_train"]))
@@ -64,3 +64,15 @@ def load(name: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     y_test = read_labels(os.path.join(folder, FILES["y_test"]))
 
     return x_train, y_train, x_test, y_test
+
+def split_validation(
+    x: np.ndarray,
+    y: np.ndarray,
+    n_val: int = 5000,
+    seed: int = 0,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    rng = np.random.default_rng(seed)
+    idx = rng.permutation(len(x))
+    val_idx = idx[:n_val] # array([37141, 17573, 34459, ..., 45305, 10302, 28162], shape=(5000,))
+    train_idx = idx[n_val:] # array([52660, 53583, 28430, ..., 54261,  6803, 49912], shape=(55000,)
+    return x[train_idx], y[train_idx], x[val_idx], y[val_idx]
