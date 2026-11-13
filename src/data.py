@@ -58,9 +58,9 @@ def load(name: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     download(name)
     folder = os.path.join("data", name)
 
-    x_train = read_images(os.path.join(folder, FILES[x_train]))
-    y_train = read_labels(os.path.join(folder, FILES[y_train]))
-    x_test = read_images(os.path.join(folder, FILES[x_test]))
-    y_test = read_labels(os.path.join(folder, FILES[y_test]))
+    x_train = read_images(os.path.join(folder, FILES["x_train"]))
+    y_train = read_labels(os.path.join(folder, FILES["y_train"]))
+    x_test = read_images(os.path.join(folder, FILES["x_test"]))
+    y_test = read_labels(os.path.join(folder, FILES["y_test"]))
 
     return x_train, y_train, x_test, y_test
