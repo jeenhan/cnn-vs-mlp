@@ -2,7 +2,7 @@
 ### Setup
 Clone `cnn-vs-mlp` and build two image recognizers from scratch. Take the CNN apart piece by piece to see what each component contributes.
 
-<table><tr><td valign="top" width="40%">
+<table width="100%"><tr><td valign="top" width="40%">
 
 <sub>__Step 1__</sub>
 
@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 </td></tr></table>
 
-<table><tr><td valign="top" width="40%">
+<table width="100%"><tr><td valign="top" width="40%">
 
 <sub>__Step 2__</sub>
 
@@ -35,6 +35,7 @@ Run the sample script then check the two grids saved in `figures/`. Each grid ha
 ```bash
 python -m scripts.show_samples
 ```
+<img src="./figures/samples_mnist.png" alt="MNIST samples" width="49%"> <img src="./figures/samples_fashion.png" alt="Fashion-MNIST samples" width="49%">
 
 </td></tr></table>
 
@@ -50,5 +51,8 @@ Dataset size
 Training budget
 
 Evaluation
+
+### Correctness Check
+1. jax.nn.softmax
 
 ### Contributions
