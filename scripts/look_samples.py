@@ -3,7 +3,7 @@ import os
 
 import matplotlib.pyplot as plt
 
-from src.data import CLASS_NAMES, load
+from src.data import CLASSES, load
 
 os.makedirs("figures", exist_ok=True)
 
@@ -13,9 +13,9 @@ for name in ["mnist", "fashion"]:
     fig, axes = plt.subplots(2, 5, figsize=(8, 4))
     for i, ax in enumerate(axes.flat):
         ax.imshow(x[i], cmap="gray")
-        ax.set_title(CLASS_NAMES[name][y[i]])
+        ax.set_title(CLASSES[name][y[i]])
         ax.axis("off")
     fig.tight_layout()
-    fig.savefig(f"figures/samples_{name}.png", dpi=150)
+    fig.savefig(f"figures/look_{name}.png", dpi=150)
     plt.close(fig)
-    print("Saved", f"figures/samples_{name}.png")
+    print("Saved", f"figures/look_{name}.png")

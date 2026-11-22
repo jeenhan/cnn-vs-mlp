@@ -33,9 +33,9 @@ Run the sample script then check the two grids saved in `figures/`. Each grid ha
 <td valign="top" width="60%">
 
 ```bash
-python -m scripts.show_samples
+python -m scripts.look_samples
 ```
-<img src="./figures/samples_mnist.png" alt="MNIST samples" width="49%"> <img src="./figures/samples_fashion.png" alt="Fashion-MNIST samples" width="49%">
+<img src="./figures/look_mnist.png" alt="10 MNIST samples" width="49%"> <img src="./figures/look_fashion.png" alt="10 Fashion-MNIST samples" width="49%">
 
 </td></tr></table>
 

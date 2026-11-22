@@ -19,9 +19,9 @@ FILES = {
 }
 
 # The data/ folder is at the top of the repo
-DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
+FOLDER = os.path.join(os.path.dirname(__file__), "..", "data")
 
-CLASS_NAMES = {
+CLASSES = {
     "mnist": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     "fashion": ["T-shirt", "Trouser", "Pullover", "Dress", "Coat",
                 "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"],
@@ -29,7 +29,7 @@ CLASS_NAMES = {
 
 # Download the 4 dataset files into data/<name>/ and skip we already have
 def download(name: str) -> None:
-    folder = os.path.join(DATA_DIR, name)
+    folder = os.path.join(FOLDER, name)
     os.makedirs(folder, exist_ok=True)
 
     for filename in FILES.values():
@@ -58,7 +58,7 @@ def read_labels(path: str) -> np.ndarray:
 # Return (x_train, y_train, x_test, y_test) for "mnist" or "fashion"
 def load(name: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     download(name)
-    folder = os.path.join(DATA_DIR, name)
+    folder = os.path.join(FOLDER, name)
 
     x_train = read_images(os.path.join(folder, FILES["x_train"]))
     y_train = read_labels(os.path.join(folder, FILES["y_train"]))
